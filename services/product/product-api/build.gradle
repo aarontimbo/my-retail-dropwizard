@@ -1,0 +1,7 @@
+/**
+ * build script for product-api project
+ */
+dependencies {
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'
+    compile 'javax.validation:validation-api:1.1.0.Final'
+}
