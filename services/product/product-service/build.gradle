@@ -1,0 +1,7 @@
+/*
+* build script for product-service
+*/
+
+dependencies {
+    compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+}

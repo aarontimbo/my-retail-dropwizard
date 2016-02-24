@@ -1,16 +1,23 @@
-apply plugin: 'groovy'
-group 'com.myretail'
-
-repositories {
-    mavenLocal()
-
-    mavenCentral()
+/**
+ * my-retail-dropwizard main project build script
+ */
+allprojects {
+    apply plugin: 'groovy'
+    group = 'com.myretail'
 }
 
-dependencies {
-    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+subprojects {
+    repositories {
+        mavenLocal()
 
-    testCompile "org.spockframework:spock-core:${spockVersion}"
-    testCompile 'junit:junit:4.11'
-    testCompile 'com.h2database:h2:1.3.168'
+        mavenCentral()
+    }
+
+    dependencies {
+        compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+
+        testCompile "org.spockframework:spock-core:${spockVersion}"
+        testCompile 'junit:junit:4.11'
+        testCompile 'com.h2database:h2:1.3.168'
+    }
 }
