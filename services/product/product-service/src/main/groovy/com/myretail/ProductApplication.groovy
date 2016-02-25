@@ -1,6 +1,8 @@
 package com.myretail
 
+import com.mongodb.Mongo
 import com.myretail.conf.ProductConfiguration
+//import com.myretail.health.MongoHealthCheck
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
@@ -21,7 +23,11 @@ class ProductApplication extends Application<ProductConfiguration>{
 
     @Override
     public void run(ProductConfiguration configuration, Environment environment) {
-        // TODO
+        Mongo mongo = new Mongo(configuration.mongohost, configuration.mongoport)
+        MongoManaged mongoManaged = new MongoManaged(mongo)
+        environment.lifecycle().manage(mongoManaged)
+
+//        environment.healthChecks().register('mongo', new MongoHealthCheck(mongo))
 
     }
 
