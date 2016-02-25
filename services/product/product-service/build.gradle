@@ -1,7 +1,8 @@
 /*
-* build script for product-service
+* build script for myRetail product-service
 */
 
 dependencies {
     compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
+    compile 'net.vz.mongodb.jackson:mongo-jackson-mapper:1.4.2'
 }
