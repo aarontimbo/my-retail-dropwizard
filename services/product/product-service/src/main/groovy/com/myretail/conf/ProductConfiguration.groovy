@@ -13,7 +13,7 @@ import javax.validation.constraints.Min
 class ProductConfiguration extends Configuration {
     @JsonProperty
     @NotEmpty
-    public String mongohost = "localhost";
+    public String mongohost = '127.0.0.1';
 
     @JsonProperty
     @Min(1L)
@@ -22,5 +22,5 @@ class ProductConfiguration extends Configuration {
 
     @JsonProperty
     @NotEmpty
-    public String mongodb = "myretail";
+    public String mongodb = 'myretail';
 }
