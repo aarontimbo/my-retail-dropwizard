@@ -1,8 +1,15 @@
 package com.myretail
 
+import com.mongodb.DB
 import com.mongodb.Mongo
 import com.myretail.conf.ProductConfiguration
+import com.myretail.consumers.ProductDetailConsumer
+import com.myretail.consumers.ProductDetailConsumerImpl
+import com.myretail.dao.ProductPriceDAO
+import com.myretail.dao.ProductPriceDAOImpl
 import com.myretail.health.MongoHealthCheck
+import com.myretail.modules.ProductModule
+import com.myretail.resources.ProductResource
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
@@ -29,6 +36,13 @@ class ProductApplication extends Application<ProductConfiguration>{
 
         environment.healthChecks().register('mongo', new MongoHealthCheck(mongo))
 
+        DB db = mongo.getDB(configuration.mongodb)
+        ProductDetailConsumer productDetailConsumer = new ProductDetailConsumerImpl()
+        ProductPriceDAO productPriceDAO = new ProductPriceDAOImpl(db)
+        ProductModule productModule = new ProductModule(productPriceDAO, productDetailConsumer)
+
+        ProductResource productResource = new ProductResource(productModule)
+        environment.jersey().register(productResource)
     }
 
 }
