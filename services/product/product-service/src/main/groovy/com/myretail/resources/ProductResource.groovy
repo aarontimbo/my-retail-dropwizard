@@ -5,6 +5,7 @@ import com.myretail.domain.ProductEntity
 import com.myretail.modules.ProductModule
 
 import javax.ws.rs.GET
+import javax.ws.rs.NotFoundException
 import javax.ws.rs.Path
 import javax.ws.rs.PathParam
 import javax.ws.rs.Produces
@@ -27,6 +28,11 @@ class ProductResource {
     @GET
     @Timed
     ProductEntity findProduct(@PathParam('productId') Long productId) {
-        return productModule.getProduct(productId)
+        ProductEntity productEntity = productModule.getProduct(productId)
+
+        if (!productEntity) {
+            throw new NotFoundException("No product found for ID: ${productId}")
+        }
+        return productEntity
     }
 }
