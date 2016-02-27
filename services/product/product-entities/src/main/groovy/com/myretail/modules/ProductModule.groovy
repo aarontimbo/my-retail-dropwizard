@@ -7,12 +7,12 @@ import com.myretail.domain.ProductDetailEntity
 import com.myretail.domain.ProductEntity
 import com.myretail.domain.ProductPriceEntity
 import com.myretail.transfer.CurrencyCode
-
-import javax.persistence.EntityNotFoundException
+import groovy.util.logging.Slf4j
 
 /**
  * Module containing business logic to handle requests for product data
  */
+@Slf4j
 class ProductModule {
 
     private final ProductPriceDAO productPriceDAO
@@ -24,12 +24,22 @@ class ProductModule {
     }
 
     public ProductEntity getProduct(Long productId) {
+        ProductDetailEntity productDetailEntity = getProductDetailEntity(productId)
+        if (!productDetailEntity) {
+            log.warn "No product details found for product ID: ${productId}"
+            return null
+        }
+
         ProductPriceEntity productPriceEntity = getProductPriceEntity(productId)
         if (!productPriceEntity) {
-            throw new EntityNotFoundException("No product price found for product ID: ${productId}")
+            log.warn "No product price found for product ID: ${productId}"
+            return null
         }
+
         CurrencyPriceEntity currencyPriceEntity = getPriceByCurrency(productPriceEntity, CurrencyCode.USD)
-        ProductDetailEntity productDetailEntity = getProductDetailEntity(productId)
+        if (!currencyPriceEntity) {
+            log.warn "No ${CurrencyCode.USD} currency value found for product ID: ${productId}"
+        }
         return buildProductEntity(productId, productDetailEntity, currencyPriceEntity)
     }
 
@@ -47,7 +57,7 @@ class ProductModule {
     }
 
     private CurrencyPriceEntity getPriceByCurrency(ProductPriceEntity productPriceEntity, CurrencyCode currencyCode) {
-        return productPriceEntity.currencyPrices.find { it.currency_code == currencyCode }
+        return productPriceEntity?.currencyPrices.find { it.currency_code == currencyCode }
     }
 
     private ProductEntity buildProductEntity(Long productId,
