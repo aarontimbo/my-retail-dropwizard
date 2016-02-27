@@ -1,5 +1,9 @@
 {
     "productId": 123456,
-    "currency_code": "USD",
-    "value": 12.34
+    "currencyPrices":[
+        {
+            "currency_code": "USD",
+            "value": 12.34
+        }
+    ]
 }

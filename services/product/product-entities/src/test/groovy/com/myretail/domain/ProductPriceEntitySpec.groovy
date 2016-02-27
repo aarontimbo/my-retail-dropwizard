@@ -12,7 +12,8 @@ class ProductPriceEntitySpec extends Specification {
 
     void 'serializes domain object to json'() {
         setup:
-        ProductPriceEntity entity = new ProductPriceEntity(productId: 123456, currency_code: 'USD', value: 12.34)
+        CurrencyPriceEntity currencyPriceEntity = new CurrencyPriceEntity(currency_code: 'USD', value: 12.34)
+        ProductPriceEntity entity = new ProductPriceEntity(productId: 123456, currencyPrices: [currencyPriceEntity])
 
         String expected = MAPPER.writeValueAsString(
                 MAPPER.readValue(fixture('fixtures/productPrice.json'), ProductPriceEntity))

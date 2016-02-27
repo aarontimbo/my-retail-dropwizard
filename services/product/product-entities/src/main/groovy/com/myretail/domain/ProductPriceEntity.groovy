@@ -1,13 +1,17 @@
 package com.myretail.domain
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+
 /**
  * Representation of persisted product price
  */
 class ProductPriceEntity {
 
+    @JsonIgnore
+    String _id
+
     Long productId
 
-    String currency_code
+    List<CurrencyPriceEntity> currencyPrices
 
-    BigDecimal value
 }
