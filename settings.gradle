@@ -1,5 +1,6 @@
 rootProject.name='my-retail-dropwizard'
 
-include 'services:product:product-api',
+include 'mongodb-bootstrap',
+        'services:product:product-api',
         'services:product:product-entities',
         'services:product:product-service'

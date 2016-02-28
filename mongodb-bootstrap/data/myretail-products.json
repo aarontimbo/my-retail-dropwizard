@@ -1,0 +1,58 @@
+{
+    "products": [
+        {
+            "productId": 13860428,
+            "currencyPrices": [
+                {
+                    "currency_code": "USD",
+                    "value": 13.49                
+                }
+            ]             
+        },
+        {
+            "productId": 15117729,
+            "currencyPrices": [
+                {
+                    "currency_code": "USD",
+                    "value": 12.34                
+                }
+            ]             
+        },
+        {
+            "productId": 16483589,
+            "currencyPrices": [
+                {
+                    "currency_code": "USD",
+                    "value": 56.78                
+                }
+            ]             
+        },
+        {
+            "productId": 16696652,
+            "currencyPrices": [
+                {
+                    "currency_code": "USD",
+                    "value": 101.27                
+                }
+            ]             
+        },
+        {
+            "productId": 16752456,
+            "currencyPrices": [
+                {
+                    "currency_code": "USD",
+                    "value": 133.44                
+                }
+            ]             
+        },
+        {
+            "productId": 15643793,
+            "currencyPrices": [
+                {
+                    "currency_code": "USD",
+                    "value": 268.99                
+                }
+            ]             
+        }
+    ]
+}

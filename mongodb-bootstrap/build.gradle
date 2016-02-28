@@ -1,0 +1,25 @@
+dependencies {
+    compile 'com.gmongo:gmongo:1.0'
+}
+
+task loadJson(type: JavaExec) {
+    description 'Run Groovy script to load JSON into MongoDB'
+
+    main = 'com.atimbo.ImportJsonToMongoDb'
+
+    // Set classpath for running the Groovy script.
+    classpath = sourceSets.main.runtimeClasspath
+
+    if (project.hasProperty('dbName')) {
+        args dbName
+    }
+
+    if (project.hasProperty('collectionName')) {
+        args collectionName
+    }
+
+    if (project.hasProperty('jsonFile')) {
+        args jsonFile
+    }
+
+}

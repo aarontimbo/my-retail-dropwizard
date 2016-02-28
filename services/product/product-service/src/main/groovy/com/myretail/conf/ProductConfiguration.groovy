@@ -23,4 +23,9 @@ class ProductConfiguration extends Configuration {
     @JsonProperty
     @NotEmpty
     public String mongodb = 'myretail';
+
+    @JsonProperty
+    @NotEmpty
+    public String collectionName = 'products';
+
 }
