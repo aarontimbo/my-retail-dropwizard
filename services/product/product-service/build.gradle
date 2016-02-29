@@ -5,6 +5,9 @@
 dependencies {
     compile "io.dropwizard:dropwizard-core:${dropwizardVersion}"
     compile 'net.vz.mongodb.jackson:mongo-jackson-mapper:1.4.2'
+    compile 'io.federecio:dropwizard-swagger:0.7.0'
 
     compile project(':services:product:product-entities')
+    
+    testCompile 'org.objenesis:objenesis:2.2'
 }

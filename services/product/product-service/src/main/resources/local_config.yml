@@ -12,6 +12,9 @@ server:
       validateCerts: false
       validatePeers: false
 
+swagger:
+  resourcePackage: com.myretail.resources
+  
 # Logging settings.
 logging:
 
