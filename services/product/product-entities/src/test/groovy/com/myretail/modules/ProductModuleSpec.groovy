@@ -42,14 +42,40 @@ class ProductModuleSpec extends Specification {
         ProductEntity productEntity = productModule.getProduct(PRODUCT_ID)
 
         then:
-        1 * productPriceDAO.findByProductId(PRODUCT_ID) >> productPriceEntity
         1 * productDetailConsumer.getProductDetailByProductId(PRODUCT_ID) >> productDetailEntity
+        1 * productPriceDAO.findByProductId(PRODUCT_ID) >> productPriceEntity
         0 * _
 
         assert productEntity.id == PRODUCT_ID
         assert productEntity.name == productDetailEntity.name
         assert productEntity.current_value.currency_code == USD
         assert productEntity.current_value.value == CURRENCY_AMOUNT
+    }
+
+    void 'retrieving a product that does not have product detail returns null'() {
+        when:
+        ProductEntity productEntity = productModule.getProduct(PRODUCT_ID)
+
+        then:
+        1 * productDetailConsumer.getProductDetailByProductId(PRODUCT_ID) >> null
+        0 * _
+
+        assert !productEntity
+    }
+
+    void 'retrieving a product that does not have product price returns null'() {
+        setup:
+        ProductDetailEntity productDetailEntity = new ProductDetailEntity(id: PRODUCT_ID, name: PRODUCT_NAME)
+
+        when:
+        ProductEntity productEntity = productModule.getProduct(PRODUCT_ID)
+
+        then:
+        1 * productDetailConsumer.getProductDetailByProductId(PRODUCT_ID) >> productDetailEntity
+        1 * productPriceDAO.findByProductId(PRODUCT_ID) >> null
+        0 * _
+
+        assert !productEntity
     }
 
     void 'update existing product price object'() {
