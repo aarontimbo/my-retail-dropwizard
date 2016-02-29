@@ -14,6 +14,8 @@ import com.myretail.resources.ProductResource
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
+import io.federecio.dropwizard.swagger.SwaggerBundle
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration
 import net.vz.mongodb.jackson.JacksonDBCollection
 
 /**
@@ -27,8 +29,12 @@ class ProductApplication extends Application<ProductConfiguration>{
 
     @Override
     public void initialize(Bootstrap<ProductConfiguration> bootstrap) {
-        // not yet implemented
-    }
+        bootstrap.addBundle(new SwaggerBundle<ProductConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ProductConfiguration configuration) {
+                return configuration.swaggerBundleConfiguration;
+            }
+        });    }
 
     @Override
     public void run(ProductConfiguration configuration, Environment environment) {
@@ -46,8 +52,11 @@ class ProductApplication extends Application<ProductConfiguration>{
 
         ProductModule productModule = new ProductModule(productPriceDAO, productDetailConsumer)
 
+        // Product Resource
         ProductResource productResource = new ProductResource(productModule)
         environment.jersey().register(productResource)
+
+
     }
 
     private JacksonDBCollection<ProductPriceEntity, String> getCollection(ProductConfiguration configuration, DB db) {
