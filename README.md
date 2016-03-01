@@ -28,7 +28,7 @@ Web application built with the [Dropwizard](http://www.dropwizard.io/0.9.2/docs/
 ### With IntelliJ IDEA
 
 1. Import project
-2. Select `my-retail`dropwizard` project directory
+2. Select `my-retail-dropwizard` project directory
 3. Import project from external_model (select Gradle)
 4. Locate the `ProductApplication.groovy` class
 5. Start the service by running the `main` method in the `ProductApplication.groovy` class. NOTE: The Program Arguments in the IntelliJ run configuration will need to be `server src/main/resources/local_config.yml` and the working directory should be `product-service`.
