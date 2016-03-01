@@ -1,5 +1,7 @@
 package com.myretail.dao
 
+import com.myretail.domain.CurrencyPriceEntity
+
 import static com.myretail.transfer.CurrencyCode.USD
 
 import com.github.fakemongo.Fongo
@@ -32,8 +34,6 @@ class ProductPriceDAOImplSpec extends Specification {
     }
 
     void 'retrieve product price object by product id'() {
-        given:
-
         when:
         ProductPriceEntity productPriceEntity = productPriceDAO.findByProductId(PRODUCT_ID)
 
@@ -42,6 +42,26 @@ class ProductPriceDAOImplSpec extends Specification {
         assert productPriceEntity.productId == PRODUCT_ID
         assert productPriceEntity.currencyPrices[0].currency_code == USD
         assert productPriceEntity.currencyPrices[0].value == PRODUCT_PRICE
+    }
+
+    void 'update product price'() {
+        given:
+        Double updatedPrice = 999.99
+        CurrencyPriceEntity updatedCurrencyPrice = new CurrencyPriceEntity(
+                currency_code: USD,
+                value: updatedPrice
+        )
+        ProductPriceEntity updatedProductPrice = new ProductPriceEntity(
+                productId: PRODUCT_ID,
+                currencyPrices: [updatedCurrencyPrice]
+        )
+
+        when:
+        productPriceDAO.updateProductPrice(updatedProductPrice)
+        ProductPriceEntity productPriceEntity = productPriceDAO.findByProductId(PRODUCT_ID)
+
+        then:
+        assert productPriceEntity.currencyPrices[0].value == updatedPrice
     }
 
     private void initializeCollection(DBCollection collection) {

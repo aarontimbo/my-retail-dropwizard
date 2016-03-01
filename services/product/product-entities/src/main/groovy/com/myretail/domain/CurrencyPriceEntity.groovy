@@ -9,6 +9,6 @@ class CurrencyPriceEntity {
 
     CurrencyCode currency_code
 
-    BigDecimal value
+    Double value
 
 }
