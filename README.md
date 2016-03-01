@@ -11,27 +11,27 @@ Web application built with the [Dropwizard](http://www.dropwizard.io/0.9.2/docs/
 ## Setup
 
 * Clone the project
-* Open a terminal and navigation to the `my-retail-dropwizard` project directory
+* Open a terminal and navigate to the `my-retail-dropwizard` project directory
 * Bootstrap product data in the locally running instance of MongoDB by switching into the `mongodb-bootstrap` sub-project directory and running:
 
-    gradle loadJson -PdbName=myretail -PcollectionName=products -PjsonFile=data/myretail-products.json
+<b>gradle loadJson -PdbName=myretail -PcollectionName=products -PjsonFile=data/myretail-products.json</b>
 
 ## Running the application
 
-* ###From the Command line:
+### From the Command line:
 
-** Navigate to the `product-service` sub-project (services/product/product-service) from the `my-retail-dropwizard` project
-** Start the service by executing:
+1. Navigate to the `product-service` sub-project (services/product/product-service) from the `my-retail-dropwizard` project
+2. Start the service by executing:
 
-    gradle run
+<b>gradle run</b>
 
-* ###With IntelliJ IDEA
+### With IntelliJ IDEA
 
-** Import project
-** Select `my-retail`dropwizard` project directory
-** Import project from external_model -> Gradle
-** Locate the `ProductApplication.groovy` class
-** Start the service by running the `main` method in the `ProductApplication.groovy` class. NOTE: The Program Arguments in the IntelliJ run configuration will need to be `server src/main/resources/local_config.yml` and the working directory should be `product-service`.
+1. Import project
+2. Select `my-retail`dropwizard` project directory
+3. Import project from external_model (select Gradle)
+4. Locate the `ProductApplication.groovy` class
+5. Start the service by running the `main` method in the `ProductApplication.groovy` class. NOTE: The Program Arguments in the IntelliJ run configuration will need to be `server src/main/resources/local_config.yml` and the working directory should be `product-service`.
 
 ## Accessing the Endpoints
 
