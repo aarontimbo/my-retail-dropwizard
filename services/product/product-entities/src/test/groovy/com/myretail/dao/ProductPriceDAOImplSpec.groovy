@@ -1,6 +1,5 @@
 package com.myretail.dao
 
-import com.myretail.domain.CurrencyPriceEntity
 
 import static com.myretail.transfer.CurrencyCode.USD
 
@@ -8,6 +7,7 @@ import com.github.fakemongo.Fongo
 import com.mongodb.BasicDBObject
 import com.mongodb.DB
 import com.mongodb.DBCollection
+import com.myretail.domain.CurrencyPriceEntity
 import com.myretail.domain.ProductPriceEntity
 import net.vz.mongodb.jackson.JacksonDBCollection
 import spock.lang.Specification
@@ -57,10 +57,11 @@ class ProductPriceDAOImplSpec extends Specification {
         )
 
         when:
-        productPriceDAO.updateProductPrice(updatedProductPrice)
+        boolean result = productPriceDAO.updateProductPrice(updatedProductPrice)
         ProductPriceEntity productPriceEntity = productPriceDAO.findByProductId(PRODUCT_ID)
 
         then:
+        assert result
         assert productPriceEntity.currencyPrices[0].value == updatedPrice
     }
 

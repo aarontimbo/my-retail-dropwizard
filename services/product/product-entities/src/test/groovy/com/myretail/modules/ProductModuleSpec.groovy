@@ -1,5 +1,7 @@
 package com.myretail.modules
 
+import spock.lang.Unroll
+
 import static com.myretail.transfer.CurrencyCode.USD
 
 import com.myretail.consumers.ProductDetailConsumer
@@ -64,7 +66,7 @@ class ProductModuleSpec extends Specification {
     }
 
     void 'retrieving a product that does not have product price returns null'() {
-        setup:
+        given:
         ProductDetailEntity productDetailEntity = new ProductDetailEntity(id: PRODUCT_ID, name: PRODUCT_NAME)
 
         when:
@@ -78,7 +80,23 @@ class ProductModuleSpec extends Specification {
         assert !productEntity
     }
 
-    void 'update existing product price object'() {
-        //TODO
+    @Unroll
+    void 'update existing product price object where object updated result is #isUpdated'() {
+        given:
+        ProductPriceEntity productPriceEntity = new ProductPriceEntity(productId: PRODUCT_ID)
+
+        when:
+        boolean result = productModule.updateProductPrice(productPriceEntity)
+
+        then:
+        1 * productPriceDAO.updateProductPrice(productPriceEntity) >> isUpdated
+        0 * _
+
+        assert result == isUpdated
+        
+        where:
+        isUpdated | _
+        true      | _
+        false     | _
     }
 }

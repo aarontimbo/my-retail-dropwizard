@@ -1,14 +1,18 @@
 package com.myretail.dao
 
-import com.myretail.domain.CurrencyPriceEntity
+import com.mongodb.BasicDBObject
+import com.mongodb.DBObject
+import com.mongodb.WriteResult as MongoDBWriteResult
 import com.myretail.domain.ProductPriceEntity
-import com.myretail.transfer.CurrencyCode
+import groovy.util.logging.Slf4j
 import net.vz.mongodb.jackson.DBCursor
 import net.vz.mongodb.jackson.JacksonDBCollection
+import net.vz.mongodb.jackson.WriteResult
 
 /**
  * Implementation for performing Product Price CRUD operations with MongoDB data store
  */
+Slf4j
 class ProductPriceDAOImpl implements ProductPriceDAO {
 
     JacksonDBCollection<ProductPriceEntity, String> dbCollection
@@ -22,19 +26,15 @@ class ProductPriceDAOImpl implements ProductPriceDAO {
         return productPricesCursor.find{ it.productId == productId }
     }
 
-    void updateProductPrice(ProductPriceEntity productPriceEntity ){
-//        ProductPriceEntity productPriceEntity = findByProductId(productId)
-//        if (productPriceEntity) {
-//            CurrencyPriceEntity existingPrice = findCurrencyPrice(productPriceEntity, currencyPriceEntity.currency_code)
-//            if (existingPrice) {
-//                existingPrice.value = currencyPriceEntity.value
-//            }
-//        }
-        // not implemented yet
-    }
-
-    private CurrencyPriceEntity findCurrencyPrice(ProductPriceEntity productPriceEntity, CurrencyCode currencyCode) {
-        return productPriceEntity.currencyPrices.find{ it.currency_code == currencyCode }
+    boolean updateProductPrice(ProductPriceEntity productPriceEntity ){
+        DBObject obj = new BasicDBObject('productId', productPriceEntity.productId)
+        WriteResult<ProductPriceEntity, MongoDBWriteResult> updateResult = dbCollection.update(obj, productPriceEntity)
+        if (updateResult.writeResult.error) {
+            log.error("Unable to update product with ID: ${productPriceEntity.productId}. " +
+                      "Error: ${updateResult.writeResult.error}")
+            return false
+        }
+        return true
     }
 
 }
