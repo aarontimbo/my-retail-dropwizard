@@ -4,6 +4,8 @@ import com.myretail.domain.ProductEntity
 import com.myretail.modules.ProductModule
 import spock.lang.Specification
 
+import javax.ws.rs.NotFoundException
+
 class ProductResourceSpec extends Specification {
 
     private static final Long PRODUCT_ID = 123456
@@ -28,4 +30,16 @@ class ProductResourceSpec extends Specification {
         assert productEntity
         assert productEntity.id == PRODUCT_ID
     }
+
+    void 'find product by throws not foudn exception if product does not exist'() {
+        when:
+        productResource.findProduct(PRODUCT_ID)
+
+        then:
+        1 * productModule.getProduct(PRODUCT_ID) >> null
+        0 * _
+
+        thrown(NotFoundException)
+    }
+
 }
