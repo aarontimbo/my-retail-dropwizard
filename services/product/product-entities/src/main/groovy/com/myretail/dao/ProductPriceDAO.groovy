@@ -9,5 +9,5 @@ interface ProductPriceDAO {
 
     ProductPriceEntity findByProductId(Long productId)
 
-    Long updateProductPrice(ProductPriceEntity productPriceEntity)
+    void updateProductPrice(ProductPriceEntity productPriceEntity)
 }

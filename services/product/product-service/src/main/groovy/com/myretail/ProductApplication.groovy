@@ -55,8 +55,6 @@ class ProductApplication extends Application<ProductConfiguration>{
         // Product Resource
         ProductResource productResource = new ProductResource(productModule)
         environment.jersey().register(productResource)
-
-
     }
 
     private JacksonDBCollection<ProductPriceEntity, String> getCollection(ProductConfiguration configuration, DB db) {

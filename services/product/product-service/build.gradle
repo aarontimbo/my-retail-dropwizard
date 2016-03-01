@@ -48,12 +48,25 @@ shadowJar {
     }
 }
 
-task runApp(dependsOn: 'shadowJar', group: 'dropwizard',  description: "Run service using local configuration") << {
-    // Grab any dw. properties that are specified on the command line and pass to the Java process (i.e. dw.http.port=8080)
-    def props = project.ext.properties.findAll { it.key.startsWith('dw') }
-    javaexec {
-        main = '-jar'
-        args = ["${shadowJar.archivePath}", 'server', 'src/main/resources/local_config.yml']
+/**
+ * Task that will start up the DW service using the local configuration.
+ * This doesn't fork, so the Gradle process doesn't return until the service is killed (Ctrl+C)
+ */
+[runShadow, run].each {
+    it.configure {
+        def props = project.ext.properties.findAll { it.key.startsWith('dw') || it.key.startsWith('feature') }
         systemProperties = props
+
+        //Configure the Dropwizard Target. Defaults to 'server'
+        def serviceTarget = 'server'
+        args serviceTarget
+
+        //Configure the Dropwizard configuration file path.
+        def configName = 'local'
+        args "src/main/resources/${configName}_config.yml"
+
+        //Configure if the service is in debug mode. Defaults to false
+        def debugVal = project.hasProperty('run.debug')
+        debug = debugVal
     }
 }
