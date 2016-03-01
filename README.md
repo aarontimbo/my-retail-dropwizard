@@ -14,7 +14,7 @@ Web application built with the [Dropwizard](http://www.dropwizard.io/0.9.2/docs/
 * Open a terminal and navigate to the `my-retail-dropwizard` project directory
 * Bootstrap product data in the locally running instance of MongoDB by switching into the `mongodb-bootstrap` sub-project directory and running:
 
-<b>gradle loadJson -PdbName=myretail -PcollectionName=products -PjsonFile=data/myretail-products.json</b>
+`gradle loadJson -PdbName=myretail -PcollectionName=products -PjsonFile=data/myretail-products.json`
 
 ## Running the application
 
@@ -23,7 +23,7 @@ Web application built with the [Dropwizard](http://www.dropwizard.io/0.9.2/docs/
 1. Navigate to the `product-service` sub-project (services/product/product-service) from the `my-retail-dropwizard` project
 2. Start the service by executing:
 
-<b>gradle run</b>
+`gradle run`
 
 ### With IntelliJ IDEA
 
