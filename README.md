@@ -20,7 +20,7 @@ Web application built with the [Dropwizard](http://www.dropwizard.io/0.9.2/docs/
 
 ### From the Command line:
 
-1. Navigate to the `product-service` sub-project (services/product/product-service) from the `my-retail-dropwizard` project
+1. Navigate to the `my-retail-dropwizard` project
 2. Start the service by executing:
 
 `gradle run`
