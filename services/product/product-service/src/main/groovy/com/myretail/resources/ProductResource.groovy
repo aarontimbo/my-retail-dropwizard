@@ -17,7 +17,7 @@ import javax.ws.rs.Produces
 import javax.ws.rs.core.MediaType
 
 /**
- * Resource with endpoints for accessing Product data
+ * Resource for interacting with Product data
  */
 @Path('/products')
 @Api(value = "/products", description = "Product data access")
@@ -30,11 +30,17 @@ class ProductResource {
         this.productModule = productModule
     }
 
+    /*
+     * Retrieve a product object by an ID.
+     *
+     * @param   id of the product to retrieve
+     * @return  Product entity
+     */
     @Path('/{productId}')
     @GET
     @Timed
     @ApiOperation(
-            value = "Find pet by Product ID",
+            value = "Find product by ID",
             notes = "Returns a product",
             response = ProductEntity)
     @ApiResponses(value = [ @ApiResponse(code = 404, message = "No product found for ID:") ] )
