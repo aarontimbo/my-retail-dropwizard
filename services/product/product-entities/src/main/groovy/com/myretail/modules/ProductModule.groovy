@@ -23,6 +23,12 @@ class ProductModule {
         this.productDetailConsumer = productDetailConsumer
     }
 
+    /**
+     * Retrieve an existing product.
+     *
+     * @param productId
+     * @return
+     */
     public ProductEntity getProduct(Long productId) {
         ProductDetailEntity productDetailEntity = getProductDetailEntity(productId)
         if (!productDetailEntity) {
@@ -43,10 +49,19 @@ class ProductModule {
         return buildProductEntity(productId, productDetailEntity, currencyPriceEntity)
     }
 
+    /**
+     * Update the {@link ProductPriceEntity} for a given product.
+     *  
+     * @param productPriceEntity The new product price data as an object
+     * @return
+     */
     public boolean updateProductPrice(ProductPriceEntity productPriceEntity) {
+        log.info "Updating product price for ID: ${productPriceEntity.productId}"
         return productPriceDAO.updateProductPrice(productPriceEntity)
     }
 
+    //~ Begin private methods ==============================
+    
     private ProductPriceEntity getProductPriceEntity(Long productId) {
         return productPriceDAO.findByProductId(productId)
     }
@@ -59,12 +74,21 @@ class ProductModule {
         return productPriceEntity?.currencyPrices.find { it.currency_code == currencyCode }
     }
 
+    /**
+     * Build a {@link ProductEntity} with product price information.
+     *
+     * @param productId     Product ID for product to return
+     * @param productDetailEntity   Product details (e.g. name/description)
+     * @param currencyPriceEntity   Product price by currency type
+     * @return
+     */
     private ProductEntity buildProductEntity(Long productId,
                                              ProductDetailEntity productDetailEntity,
                                              CurrencyPriceEntity currencyPriceEntity) {
         return new ProductEntity(
                 id: productId,
-                name: productDetailEntity ? productDetailEntity.name: 'foo',
-                current_value: currencyPriceEntity)
+                name: productDetailEntity.name,
+                current_value: currencyPriceEntity
+        )
     }
 }

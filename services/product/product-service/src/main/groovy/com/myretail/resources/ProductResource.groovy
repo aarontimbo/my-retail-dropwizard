@@ -72,7 +72,8 @@ class ProductResource {
             value = "Update an existing product price",
             notes = "Returns a product",
             response = Response)
-    @ApiResponses(value = [ @ApiResponse(code = 400, message = "Product price could not be updated") ] )
+    @ApiResponses(value = [ @ApiResponse(code = 400, message = "Error updating product price"),
+                            @ApiResponse(code = 422, message = "Validation error")] )
     Response updateProduct(@ApiParam(value = "Updated Product Price Object", required = true)
                            @Valid ProductPriceEntity productPriceEntity) {
 
