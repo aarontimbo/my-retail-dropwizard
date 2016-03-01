@@ -43,9 +43,8 @@ class ProductModule {
         return buildProductEntity(productId, productDetailEntity, currencyPriceEntity)
     }
 
-    //TODO handle updates to product price
-    public Long updateProductPrice() {
-        // TODO
+    public boolean updateProductPrice(ProductPriceEntity productPriceEntity) {
+        return productPriceDAO.updateProductPrice(productPriceEntity)
     }
 
     private ProductPriceEntity getProductPriceEntity(Long productId) {
