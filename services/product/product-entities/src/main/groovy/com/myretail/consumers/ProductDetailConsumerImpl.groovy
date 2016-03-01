@@ -23,10 +23,17 @@ class ProductDetailConsumerImpl implements ProductDetailConsumer {
     private static final String BASE_URL = 'https://api.target.com/products/v3/'
     private static final String URL_SUFFIX = '?fields=descriptions&id_type=TCIN&key=43cJWpLjH8Z8oR18KdrZDBKAgLLQKJjz'
 
+    /**
+     * Makes a request to an external resource for product details
+     * and builds an {@link ProductDetailEntity} to return.
+     *
+     * @param productId     Product ID to use for the request
+     * @return
+     */
     public ProductDetailEntity getProductDetailByProductId(Long productId) {
         String url = getProductUrl(productId)
         Optional<String> response = getProductDetail(url)
-        log.info "Product Details for product id: ${productId} - ${response}"
+        log.debug "Product Details for product id: ${productId} - ${response}"
         return buildProductDetail(productId, response)
     }
 
@@ -61,9 +68,16 @@ class ProductDetailConsumerImpl implements ProductDetailConsumer {
         return BASE_URL + productId + URL_SUFFIX
     }
 
+    /**
+     * Build a {@link ProductDetailEntity} from the JSON response. If the JSON does
+     * not contain a description (i.e. name) of the a product, returns null.
+     *
+     * @param productId     Product ID to assign to the {@link ProductDetailEntity}
+     * @param optional      JSON to be parsed
+     * @return
+     */
     private ProductDetailEntity buildProductDetail(Long productId, Optional<String> optional) {
         def obj = jsonSlurper.parseText(optional.get())
-        log.debug "Parsed response::${obj}"
 
         String productName = getProductName(obj)
         if (productName) {
